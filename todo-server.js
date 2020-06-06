@@ -51,8 +51,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// endpoint to Get all comments
-app.get("/comments", (req, res) => {
+// endpoint to Get all todos
+app.get("/todos", (req, res) => {
   db.collection(collName)
     .find({})
     .toArray(function(err, result) {
@@ -60,14 +60,14 @@ app.get("/comments", (req, res) => {
       //console.log(result);
       res.status(200).send({
         success: "true",
-        message: "comments retrieved successfully",
-        comments: result
+        message: "todos retrieved successfully",
+        todos: result
       });
     });
 });
 
-//endpoint to get a single comment
-app.get("/getcomment/:data", (req, res, next) => {
+//endpoint to get a single todo
+app.get("/gettodo/:data", (req, res, next) => {
   const data = req.params.data;
 
   db.collection(collName).findOne(
@@ -79,7 +79,7 @@ app.get("/getcomment/:data", (req, res, next) => {
       console.log(result);
       res.status(200).send({
         status_code: 200,
-        message: result ? result : "comment not found"
+        message: result ? result : "todo not found"
       });
     }
   );
@@ -105,8 +105,8 @@ app.post("/addtodo", (req, res) => {
     .catch(error => console.error(error));
 });
 
-//Endpoint to Delete a single comment
-app.post("/deletecomment/:data", (req, res) => {
+//Endpoint to Delete a single todo
+app.post("/deletetodo/:data", (req, res) => {
   const data = req.params.data;
   console.log(data);
   db.collection(collName).deleteOne(
@@ -122,7 +122,7 @@ app.post("/deletecomment/:data", (req, res) => {
 
   return res.status(200).send({
     status_code: 200,
-    message: "comment deleted"
+    message: "todo deleted"
   });
 });
 
